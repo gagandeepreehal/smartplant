@@ -3,9 +3,9 @@ const interval = 1;
 let lastSpoken = new Date();
 const express = require("express");
 const app = express();
-var recognition = SpeechRecognition;
+var recognition = new webkitSpeechRecognition();
 recognition.onresult = function(event) {
-    console.log(event);
+ console.log(event);
 }
 recognition.start();
 plant = {
