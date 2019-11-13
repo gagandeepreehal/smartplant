@@ -3,8 +3,6 @@ const interval = 1;
 let lastSpoken = new Date();
 const express = require("express");
 const app = express();
-var utterance = new SpeechSynthesisUtterance();
-window.speechSynthesis.speak(utterance);
 var recognition = SpeechRecognition;
 recognition.onresult = function(event) {
     console.log(event);
