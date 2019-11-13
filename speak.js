@@ -22,7 +22,9 @@ plant = {
             "My name is smart plant."
         ],
         reply: [
-            "That's what she said! Haha!"
+            "That's what she said! Haha!",
+            "Are you hitting up on me?",
+            "Oh! How sweet of you? Thank you!"
         ]
     },
     complain: {
