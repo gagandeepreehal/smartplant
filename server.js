@@ -1,7 +1,11 @@
 // Start a simple HTTP server
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 var fs = require("fs");
+
+let numberOfClients = 0;
 
 // Log settings
 let lastUpdated = new Date();
@@ -9,7 +13,9 @@ const logIntervalMinutes = 0.1;
 
 function updateData(sensorData) {
     const now = new Date();
-
+    if (numberOfClients > 0) {
+        io.sockets.emit("sensor data", { data: sensorData });
+    }
     // If log interval has elapsed log entry
     if (now.getTime() - lastUpdated.getTime() > logIntervalMinutes * 60 * 1000) {
         lastUpdated = now;
@@ -59,10 +65,19 @@ function start() {
             // Send response to the log
             response.send(data);
         });
-    });
 
+    });
     // Define route folder for static requests
     app.use(express.static(`${__dirname}/public`));
+
+    // Increment client counter if someone connects
+    io.on("connection", socket => {
+        numberOfClients++;
+
+        // Decrement client counter if someone disconnects
+        socket.on("disconnect", () => {
+            numberOfClients--;
+        });
 }
 
 exports.start = start;
