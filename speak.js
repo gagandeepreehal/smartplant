@@ -4,10 +4,14 @@ let lastSpoken = new Date();
 const express = require("express");
 const app = express();
 var recognition = new webkitSpeechRecognition();
-recognition.onresult = function(event) {
- console.log(event);
-}
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = "en-US";
+recognition.continuous = true;
 recognition.start();
+recognition.onresult = function(event) {
+    console.info(`You said : ${event.results[i][0].transcript}`);
+    }
 plant = {
     answer: {
         greet: [
@@ -20,9 +24,7 @@ plant = {
             "My name is smart plant."
         ],
         reply: [
-            "That's what she said! Haha!",
-            "Are you hitting up on me?",
-            "Oh! How sweet of you? Thank you!"
+            "That's what she said! Haha!"
         ]
     },
     complain: {
