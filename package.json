@@ -13,7 +13,7 @@
     "server"
   ],
   "author": "Gagandeep Reehal",
-  "license": "MIY",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "johnny-five": "^1.0.0",
