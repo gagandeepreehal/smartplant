@@ -3,13 +3,28 @@ const interval = 1;
 let lastSpoken = new Date();
 const express = require("express");
 const app = express();
-var utterance = new SpeechSynthesisUtterance();
-window.speechSynthesis.speak(utterance);
-var recognition = SpeechRecognition;
+const socket = io();
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = "en-US";
+recognition.continuous = true;
+document.querySelector('button').addEventListener('click', () => {
+  recognition.start();
+});
+recognition.addEventListener('result', (e) => {
+  let last = e.results.length - 1;
+  let text = e.results[last][0].transcript;
+  socket.emit('chat message', text);
+  console.log('Confidence: ' + e.results[0][0].confidence);
+
+});
 recognition.onresult = function(event) {
-    console.log(event);
-}
-recognition.start();
+    console.info(`You said : ${event.results[i][0].transcript}`);
+    socket.emit('chat message', text);
+    }
 plant = {
     answer: {
         greet: [
